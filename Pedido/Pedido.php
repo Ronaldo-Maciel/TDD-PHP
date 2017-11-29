@@ -12,10 +12,10 @@ class Pedido
 		$this->quantidade = $quantidade;
 	}
 
-	public function fechar(Estoque $estoque) {
-		if ($estoque->get($this->item) >= $this->quantidade) {
+	public function fecharPedido(Estoque $estoque) {
+		if ($estoque->getItem($this->item) >= $this->quantidade) {
 			$this->finalizado = true;
-			$estoque->remove($this->item, $this->quantidade);
+			$estoque->removeItem($this->item, $this->quantidade);
 		}
 	}
 

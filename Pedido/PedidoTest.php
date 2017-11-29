@@ -20,15 +20,32 @@ class PedidoTest extends TestCase
 			          ->with($this->equalTo($item))
 			          ->will($this->returnValue($quantidade));
 		$this->estoque->expects($this->once())
-					  ->methd("removeItem")
+					  ->method("removeItem")
 					  ->with(
 					  		$this->equalTo($item),
 					  		$this->equalTo($quantidade)
 					  	);
 
 		$pedido = new Pedido($item, $quantidade);
-		$pedido->fechar($this->estoque);
+		$pedido->fecharPedido($this->estoque);
 
 		$this->assertTrue($pedido->isFinalizado());
+	}
+
+	public function testNaoDeveFecharPedido() {
+		$item = "Blusa X";
+		$quantidade = 3;
+
+		$this->estoque->expects($this->once())
+			 ->method('getItem')
+			 ->with($this->equalTo($item))
+			 ->will($this->returnValue(0));
+		$this->estoque->expects($this->never())
+			 ->method('removeItem');
+			 $pedido = new Pedido($item, $quantidade);
+			 $pedido->fecharPedido($this->estoque);
+			 $this->assertFalse($pedido->isFinalizado());
+
+
 	}
 }

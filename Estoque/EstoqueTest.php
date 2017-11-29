@@ -18,7 +18,7 @@ class EstoqueTest extends TestCase
 
 		$this->estoque->addItem($item, $quantidade);
 
-		$this->assertSame($quantidade, $this->estoque-> getItem($item));
+		$this->assertSame($quantidade, $this->estoque->getItem($item));
 	}
 	public function testSomaQuantidade() {
 		$item = "Bluza X";
@@ -39,5 +39,11 @@ class EstoqueTest extends TestCase
 	public function testItemInvalido() {
 
 		$this->estoque->getItem("Blusa Y");
+	}
+
+	public function testRemoveQuantidade() {
+		$this->estoque->addItem("blusa A", 10);
+		$this->estoque->removeItem("blusa A", 4);
+		$this->assertSame(6, $this->estoque->getItem("blusa A"));
 	}
 }

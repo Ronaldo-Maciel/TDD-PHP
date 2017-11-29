@@ -17,4 +17,11 @@ class Estoque
 
 		throw new InvalidArgumentException("Item nao existe no estoque");
 	}
+
+	public function removeItem($item, $quantidade) {
+		if (isset($this->items[$item])) {
+			$this->items[$item] -= $quantidade;
+		}
+		return $this;
+	}
 }
